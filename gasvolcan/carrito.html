@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi carrito — Gas El Volcán</title>
+<link rel="stylesheet" href="css/estilos.css">
+
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="barra-nav">
+    <a href="index.html" class="marca">
+      <svg class="llama" viewBox="0 0 24 24"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1-1-2-1-2 1 2 3 3 3 6a6 6 0 0 1-12 0c0-5 3-6 4-9 0 2 1 3 2 3 0-2 0-4 0-6z"/></svg>
+      Gas El Volcán
+    </a>
+    <button id="boton-menu" class="boton-menu" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav id="nav-principal" class="nav-principal">
+      <a href="index.html">Home</a>
+      <a href="productos.html">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="nav-acciones">
+      <div id="area-sesion" style="display:flex;gap:14px;align-items:center;">
+        <a href="login.html" class="enlace-sesion">Iniciar sesión</a>
+        <a href="registro.html" class="enlace-sesion">Registrarse</a>
+      </div>
+      <a href="carrito.html" class="carrito-mini" aria-label="Ver carrito">
+        <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.44c-.16.28-.25.61-.25.97 0 1.1.9 2 2 2h12v-2h-11.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1h-14.19l-.94-2z"/></svg>
+        <span data-contador-carrito>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<div class="franja-pagina"><div class="contenedor"><h1>Mi carrito de compras</h1></div></div>
+<section class="seccion seccion--claro">
+  <div class="contenedor">
+    <div id="vista-carrito"></div>
+  </div>
+</section>
+
+
+<footer class="pie">
+  <div class="contenedor">
+    <div>
+      <h4>Distribuidora de Gas El Volcán</h4>
+      <p>Distribución de gas licuado a domicilio en Chillán y comunas aledañas desde 1998.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul style="list-style:none;padding:0;display:grid;gap:8px;">
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Cuenta</h4>
+      <ul style="list-style:none;padding:0;display:grid;gap:8px;">
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+        <li><a href="carrito.html">Mi carrito</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <p>Av. Collín 450, Chillán<br>+56 42 221 3456<br>contacto@gasvolcan.cl</p>
+    </div>
+  </div>
+  <p class="franja">© 2026 Distribuidora de Gas El Volcán. Proyecto académico DSY1104.</p>
+</footer>
+
+<script src="js/datos-productos.js"></script>
+<script src="js/datos-usuarios.js"></script>
+<script src="js/datos-regiones.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/validaciones.js"></script>
+<script src="js/nav.js"></script>
+
+<script>
+  function pintarCarrito(){
+    const carrito = obtenerCarrito();
+    const contenedor = document.getElementById("vista-carrito");
+
+    if (carrito.length === 0){
+      contenedor.innerHTML = '<div class="carrito-vacio"><h2>Tu carrito está vacío</h2><p>Explora nuestros <a href="productos.html">productos</a> y agrega lo que necesitas.</p></div>';
+      return;
+    }
+
+    const lineasHtml = carrito.map(function(l){
+      return `
+        <div class="linea-carrito">
+          <div class="miniatura-chica">📦</div>
+          <div>
+            <strong>${l.nombre}</strong><br>
+            <span style="color:var(--gris-piedra);">${formatoCLP(l.precio)} c/u</span><br>
+            <button type="button" class="quitar" data-quitar="${l.codigo}">Quitar</button>
+          </div>
+          <div class="selector-cantidad">
+            <button type="button" data-restar="${l.codigo}">−</button>
+            <input type="number" value="${l.cantidad}" min="1" data-cantidad="${l.codigo}" style="width:52px;">
+            <button type="button" data-sumar="${l.codigo}">+</button>
+          </div>
+          <strong>${formatoCLP(l.precio * l.cantidad)}</strong>
+        </div>`;
+    }).join("");
+
+    const subtotal = subtotalCarrito();
+
+    contenedor.innerHTML = `
+      <div class="disposicion-carrito">
+        <div>${lineasHtml}</div>
+        <div class="resumen-carrito">
+          <h3>Resumen</h3>
+          <div style="display:flex;justify-content:space-between;"><span>Subtotal</span><span id="texto-subtotal">${formatoCLP(subtotal)}</span></div>
+          <div style="display:flex;justify-content:space-between;" id="fila-descuento" style="display:none;"><span>Descuento</span><span id="texto-descuento">-$0</span></div>
+          <div class="campo" style="margin-top:14px;">
+            <label for="cupon">Cupón de descuento</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="cupon" placeholder="Ingresa tu cupón">
+              <button type="button" id="aplicar-cupon" class="boton boton--contorno boton--pequeno">Aplicar</button>
+            </div>
+            <span class="mensaje-error" id="mensaje-cupon"></span>
+          </div>
+          <div class="total"><span>Total</span><span id="texto-total">${formatoCLP(subtotal)}</span></div>
+          <button id="boton-pagar" class="boton boton--llama boton--bloque">Pagar</button>
+        </div>
+      </div>`;
+
+    let descuentoAplicado = 0;
+
+    function actualizarTotales(){
+      const sub = subtotalCarrito();
+      const total = Math.max(0, sub - descuentoAplicado);
+      document.getElementById("texto-subtotal").textContent = formatoCLP(sub);
+      document.getElementById("texto-total").textContent = formatoCLP(total);
+    }
+
+    document.getElementById("aplicar-cupon").addEventListener("click", function(){
+      const valor = document.getElementById("cupon").value.trim().toUpperCase();
+      const mensaje = document.getElementById("mensaje-cupon");
+      if (valor === CUPON_VALIDO){
+        descuentoAplicado = Math.round(subtotalCarrito() * 0.10);
+        mensaje.style.color = "var(--verde-ok)";
+        mensaje.textContent = "Cupón aplicado: 10% de descuento.";
+      } else {
+        descuentoAplicado = 0;
+        mensaje.style.color = "var(--rojo-alerta)";
+        mensaje.textContent = "El cupón ingresado no es válido.";
+      }
+      actualizarTotales();
+    });
+
+    document.getElementById("boton-pagar").addEventListener("click", function(){
+      const sesion = obtenerSesion();
+      if (!sesion){
+        alert("Debes iniciar sesión para confirmar tu pedido.");
+        window.location.href = "login.html";
+        return;
+      }
+      alert("¡Pedido confirmado! Un repartidor de Gas El Volcán se contactará para coordinar la entrega.");
+      vaciarCarrito();
+      pintarCarrito();
+    });
+
+    contenedor.querySelectorAll("[data-quitar]").forEach(btn => btn.addEventListener("click", function(){
+      quitarDelCarrito(this.dataset.quitar); pintarCarrito();
+    }));
+    contenedor.querySelectorAll("[data-sumar]").forEach(btn => btn.addEventListener("click", function(){
+      const cod = this.dataset.sumar;
+      const linea = obtenerCarrito().find(l => l.codigo === cod);
+      cambiarCantidadCarrito(cod, linea.cantidad + 1); pintarCarrito();
+    }));
+    contenedor.querySelectorAll("[data-restar]").forEach(btn => btn.addEventListener("click", function(){
+      const cod = this.dataset.restar;
+      const linea = obtenerCarrito().find(l => l.codigo === cod);
+      cambiarCantidadCarrito(cod, linea.cantidad - 1); pintarCarrito();
+    }));
+    contenedor.querySelectorAll("[data-cantidad]").forEach(input => input.addEventListener("change", function(){
+      cambiarCantidadCarrito(this.dataset.cantidad, Number(this.value)); pintarCarrito();
+    }));
+  }
+  document.addEventListener("DOMContentLoaded", pintarCarrito);
+</script>
+
+</body>
+</html>

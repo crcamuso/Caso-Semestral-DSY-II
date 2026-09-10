@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usuario — Panel administrador Gas El Volcán</title>
+<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+<div class="panel-admin">
+  <button class="boton-menu-admin" id="boton-menu-admin">☰ Menú</button>
+  <aside class="panel-lateral" id="panel-lateral">
+    <div class="marca-admin">
+      <svg class="llama" viewBox="0 0 24 24"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1-1-2-1-2 1 2 3 3 3 6a6 6 0 0 1-12 0c0-5 3-6 4-9 0 2 1 3 2 3 0-2 0-4 0-6z"/></svg>
+      Panel admin
+    </div>
+    <nav>
+      <a href="index.html" class="">🏠 Dashboard</a>
+      <a href="productos.html" class="">📦 Productos</a>
+      <a href="usuarios.html" id="enlace-usuarios" class="activo">👤 Usuarios</a>
+      <a href="../index.html">🛒 Ver tienda</a>
+    </nav>
+    <div class="sesion-usuario">
+      <strong id="nombre-sesion">Usuario</strong>
+      <span id="rol-sesion">Rol</span><br>
+      <button class="salir" id="boton-salir">Cerrar sesión</button>
+    </div>
+  </aside>
+  <main class="panel-contenido">
+
+
+<div class="panel-encabezado">
+  <h1 id="titulo-form">Nuevo usuario</h1>
+  <a href="usuarios.html" class="boton boton--contorno">Volver al listado</a>
+</div>
+<div class="tarjeta-panel" style="max-width:720px;">
+  <form id="form-usuario" novalidate>
+    <p id="mensaje-usuario" class="mensaje-formulario"></p>
+
+    <div class="fila-doble">
+      <div class="campo" id="grupo-run">
+        <label for="run">RUN (sin puntos ni guion)</label>
+        <input type="text" id="run" maxlength="9" placeholder="Ej: 19011022K">
+        <span class="mensaje-error" id="error-run"></span>
+      </div>
+      <div class="campo" id="grupo-fecha-nacimiento">
+        <label for="fecha-nacimiento">Fecha de nacimiento <span class="opcional">(opcional)</span></label>
+        <input type="date" id="fecha-nacimiento">
+      </div>
+    </div>
+
+    <div class="fila-doble">
+      <div class="campo" id="grupo-nombre">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" maxlength="50">
+        <span class="mensaje-error" id="error-nombre"></span>
+      </div>
+      <div class="campo" id="grupo-apellidos">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" maxlength="100">
+        <span class="mensaje-error" id="error-apellidos"></span>
+      </div>
+    </div>
+
+    <div class="fila-doble">
+      <div class="campo" id="grupo-correo">
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" maxlength="100" placeholder="nombre@duoc.cl">
+        <span class="ayuda">@duoc.cl, @profesor.duoc.cl o @gmail.com</span>
+        <span class="mensaje-error" id="error-correo"></span>
+      </div>
+      <div class="campo" id="grupo-clave">
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" maxlength="10" placeholder="Entre 4 y 10 caracteres">
+        <span class="mensaje-error" id="error-clave"></span>
+      </div>
+    </div>
+
+    <div class="campo" id="grupo-tipo-usuario">
+      <label for="tipo-usuario">Tipo de usuario</label>
+      <select id="tipo-usuario">
+        <option value="">-- Seleccione perfil --</option>
+        <option>Administrador</option>
+        <option>Vendedor</option>
+        <option>Cliente</option>
+      </select>
+      <span class="mensaje-error" id="error-tipo-usuario"></span>
+    </div>
+
+    <div class="fila-doble">
+      <div class="campo" id="grupo-region">
+        <label for="region">Región</label>
+        <select id="region"></select>
+        <span class="mensaje-error" id="error-region"></span>
+      </div>
+      <div class="campo" id="grupo-comuna">
+        <label for="comuna">Comuna</label>
+        <select id="comuna"></select>
+        <span class="mensaje-error" id="error-comuna"></span>
+      </div>
+    </div>
+
+    <div class="campo" id="grupo-direccion">
+      <label for="direccion">Dirección</label>
+      <input type="text" id="direccion" maxlength="300">
+      <span class="mensaje-error" id="error-direccion"></span>
+    </div>
+
+    <button type="submit" class="boton boton--llama">Guardar usuario</button>
+  </form>
+</div>
+
+  </main>
+</div>
+
+<script src="../js/datos-productos.js"></script>
+<script src="../js/datos-usuarios.js"></script>
+<script src="../js/datos-regiones.js"></script>
+<script src="../js/validaciones.js"></script>
+<script src="js/admin-comun.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    if (!SESION_ADMIN) return;
+    exigirRolAdministrador();
+
+    const parametros = new URLSearchParams(window.location.search);
+    const runEdicion = parametros.get("run");
+    const esEdicion = Boolean(runEdicion);
+    let usuarioOriginal = null;
+
+    if (esEdicion){
+      usuarioOriginal = obtenerUsuarioPorRun(runEdicion);
+      if (!usuarioOriginal){ window.location.href = "usuarios.html"; return; }
+      document.getElementById("titulo-form").textContent = "Editar usuario";
+      document.getElementById("run").value = usuarioOriginal.run;
+      document.getElementById("run").disabled = true;
+      document.getElementById("fecha-nacimiento").value = usuarioOriginal.fechaNacimiento || "";
+      document.getElementById("nombre").value = usuarioOriginal.nombre;
+      document.getElementById("apellidos").value = usuarioOriginal.apellidos || "";
+      document.getElementById("correo").value = usuarioOriginal.correo;
+      document.getElementById("clave").value = usuarioOriginal.clave;
+      document.getElementById("tipo-usuario").value = usuarioOriginal.tipoUsuario;
+      document.getElementById("direccion").value = usuarioOriginal.direccion || "";
+      inicializarRegionesComunas("region", "comuna", usuarioOriginal.region, usuarioOriginal.comuna);
+    } else {
+      inicializarRegionesComunas("region", "comuna");
+    }
+
+    document.getElementById("form-usuario").addEventListener("submit", function(e){
+      e.preventDefault();
+      const run = document.getElementById("run").value.trim().toUpperCase();
+      const nombre = document.getElementById("nombre").value.trim();
+      const apellidos = document.getElementById("apellidos").value.trim();
+      const correo = document.getElementById("correo").value.trim();
+      const clave = document.getElementById("clave").value;
+      const tipoUsuario = document.getElementById("tipo-usuario").value;
+      const region = document.getElementById("region").value;
+      const comuna = document.getElementById("comuna").value;
+      const direccion = document.getElementById("direccion").value.trim();
+
+      let valido = true;
+      const runValido = esRequerido(run) && validarRun(run);
+      if (runValido) limpiarError("run","error-run");
+      else { marcarError("run","error-run","Ingresa un RUN válido, sin puntos ni guion."); valido = false; }
+      if (!esEdicion && runValido && obtenerUsuarioPorRun(run)){
+        marcarError("run","error-run","Ya existe un usuario con ese RUN."); valido = false;
+      }
+
+      if (esRequerido(nombre) && maximo(nombre, 50)) limpiarError("nombre","error-nombre");
+      else { marcarError("nombre","error-nombre","El nombre es obligatorio (máximo 50 caracteres)."); valido = false; }
+
+      if (esRequerido(apellidos) && maximo(apellidos, 100)) limpiarError("apellidos","error-apellidos");
+      else { marcarError("apellidos","error-apellidos","Los apellidos son obligatorios (máximo 100 caracteres)."); valido = false; }
+
+      const correoValido = esRequerido(correo) && maximo(correo, 100) && validarCorreo(correo);
+      if (correoValido) limpiarError("correo","error-correo");
+      else { marcarError("correo","error-correo","Usa un correo @duoc.cl, @profesor.duoc.cl o @gmail.com."); valido = false; }
+      if (correoValido && (!esEdicion || correo.toLowerCase() !== usuarioOriginal.correo.toLowerCase())){
+        if (obtenerUsuarioPorCorreo(correo)){ marcarError("correo","error-correo","Ese correo ya está registrado."); valido = false; }
+      }
+
+      if (esRequerido(clave) && minimo(clave, 4) && maximo(clave, 10)) limpiarError("clave","error-clave");
+      else { marcarError("clave","error-clave","La contraseña debe tener entre 4 y 10 caracteres."); valido = false; }
+
+      if (esRequerido(tipoUsuario)) limpiarError("tipo-usuario","error-tipo-usuario");
+      else { marcarError("tipo-usuario","error-tipo-usuario","Selecciona el tipo de usuario."); valido = false; }
+
+      if (esRequerido(region)) limpiarError("region","error-region");
+      else { marcarError("region","error-region","Selecciona una región."); valido = false; }
+
+      if (esRequerido(comuna)) limpiarError("comuna","error-comuna");
+      else { marcarError("comuna","error-comuna","Selecciona una comuna."); valido = false; }
+
+      if (esRequerido(direccion) && maximo(direccion, 300)) limpiarError("direccion","error-direccion");
+      else { marcarError("direccion","error-direccion","La dirección es obligatoria (máximo 300 caracteres)."); valido = false; }
+
+      if (!valido){
+        mostrarMensajeFormulario("mensaje-usuario","error","Revisa los campos marcados en rojo.");
+        return;
+      }
+
+      guardarUsuario({
+        run: esEdicion ? usuarioOriginal.run : run,
+        nombre, apellidos, correo, clave,
+        fechaNacimiento: document.getElementById("fecha-nacimiento").value || "",
+        tipoUsuario, region, comuna, direccion
+      }, !esEdicion);
+
+      mostrarMensajeFormulario("mensaje-usuario","exito","Usuario guardado correctamente.");
+      setTimeout(() => window.location.href = "usuarios.html", 700);
+    });
+  });
+</script>
+
+</body>
+</html>

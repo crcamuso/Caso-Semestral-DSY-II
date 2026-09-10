@@ -1,0 +1,29 @@
+/* Estilos del panel administrador — se cargan junto a estilos.css */
+
+.panel-admin{ display:grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 0px); }
+.panel-lateral{ background: var(--azul-noche); color:#EDEAE1; padding: 22px 0; }
+.panel-lateral .marca-admin{ display:flex; align-items:center; gap:10px; padding: 0 20px 20px; color:#fff; font-family: var(--fuente-titulo); font-size:1.1rem; border-bottom:1px solid #2C4459; margin-bottom: 14px; }
+.panel-lateral .marca-admin .llama{ width:22px; height:22px; fill:var(--naranja-llama); }
+.panel-lateral nav a{ display:flex; align-items:center; gap:10px; padding: 11px 20px; color:#C9D0D6; font-weight:500; border-left: 3px solid transparent; }
+.panel-lateral nav a:hover{ background:#1F3A52; text-decoration:none; color:#fff; }
+.panel-lateral nav a.activo{ background:#1F3A52; color:#fff; border-left-color: var(--naranja-llama); }
+.panel-lateral .sesion-usuario{ padding: 14px 20px; margin-top:16px; border-top:1px solid #2C4459; font-size:.85rem; color:#9FB0BB; }
+.panel-lateral .sesion-usuario strong{ color:#fff; display:block; }
+.panel-lateral button.salir{ background:none; border:none; color: var(--naranja-llama); cursor:pointer; font-weight:600; padding:0; margin-top:6px; }
+
+.panel-contenido{ padding: 30px 34px; background: var(--crema); }
+.panel-encabezado{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom: 24px; flex-wrap:wrap; }
+.panel-encabezado h1{ margin:0; font-size:1.6rem; }
+.tarjeta-panel{ background:#fff; border:1px solid var(--borde); border-radius: var(--radio); padding: 22px; }
+
+.boton-menu-admin{ display:none; background: var(--azul-noche); color:#fff; border:none; padding:10px 14px; font-weight:600; }
+@media (max-width: 900px){
+  .panel-admin{ grid-template-columns: 1fr; }
+  .panel-lateral{ position:fixed; top:0; left:-260px; width:230px; height:100vh; z-index:60; transition:left .2s ease; overflow-y:auto; }
+  .panel-lateral.abierto{ left:0; }
+  .boton-menu-admin{ display:block; }
+  .panel-contenido{ padding: 18px; }
+}
+
+.acciones-fila{ display:flex; gap:8px; flex-wrap:wrap; }
+.tabla-simple td.numerico, .tabla-simple th.numerico{ text-align:right; }

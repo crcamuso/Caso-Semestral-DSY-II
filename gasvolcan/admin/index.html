@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Panel administrador Gas El Volcán</title>
+<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+<div class="panel-admin">
+  <button class="boton-menu-admin" id="boton-menu-admin">☰ Menú</button>
+  <aside class="panel-lateral" id="panel-lateral">
+    <div class="marca-admin">
+      <svg class="llama" viewBox="0 0 24 24"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1-1-2-1-2 1 2 3 3 3 6a6 6 0 0 1-12 0c0-5 3-6 4-9 0 2 1 3 2 3 0-2 0-4 0-6z"/></svg>
+      Panel admin
+    </div>
+    <nav>
+      <a href="index.html" class="activo">🏠 Dashboard</a>
+      <a href="productos.html" class="">📦 Productos</a>
+      <a href="usuarios.html" id="enlace-usuarios" class="">👤 Usuarios</a>
+      <a href="../index.html">🛒 Ver tienda</a>
+    </nav>
+    <div class="sesion-usuario">
+      <strong id="nombre-sesion">Usuario</strong>
+      <span id="rol-sesion">Rol</span><br>
+      <button class="salir" id="boton-salir">Cerrar sesión</button>
+    </div>
+  </aside>
+  <main class="panel-contenido">
+
+
+<div class="panel-encabezado">
+  <h1 id="titulo-saludo">¡Hola, Administrador!</h1>
+</div>
+<div class="rejilla-productos" style="grid-template-columns:repeat(3,1fr);">
+  <div class="tarjeta-panel">
+    <h3>Productos totales</h3>
+    <p style="font-family:var(--fuente-titulo); font-size:2rem; margin:0;" id="dato-productos">0</p>
+  </div>
+  <div class="tarjeta-panel">
+    <h3>Productos con stock crítico</h3>
+    <p style="font-family:var(--fuente-titulo); font-size:2rem; margin:0; color:var(--rojo-alerta);" id="dato-stock-critico">0</p>
+  </div>
+  <div class="tarjeta-panel">
+    <h3>Usuarios registrados</h3>
+    <p style="font-family:var(--fuente-titulo); font-size:2rem; margin:0;" id="dato-usuarios">0</p>
+  </div>
+</div>
+<div class="tarjeta-panel" style="margin-top:24px;">
+  <h3>Productos con stock igual o inferior al crítico</h3>
+  <div class="tabla-responsiva">
+    <table class="tabla-simple">
+      <thead><tr><th>Código</th><th>Producto</th><th class="numerico">Stock</th><th class="numerico">Stock crítico</th></tr></thead>
+      <tbody id="tabla-stock-critico"></tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<script src="../js/datos-productos.js"></script>
+<script src="../js/datos-usuarios.js"></script>
+<script src="../js/datos-regiones.js"></script>
+<script src="../js/validaciones.js"></script>
+<script src="js/admin-comun.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    if (!SESION_ADMIN) return;
+    document.getElementById("titulo-saludo").textContent = "¡Hola, " + SESION_ADMIN.nombre + "!";
+    const productos = obtenerProductos();
+    const criticos = productos.filter(p => p.stockCritico !== null && p.stockCritico !== undefined && p.stockCritico !== "" && p.stock <= Number(p.stockCritico));
+
+    document.getElementById("dato-productos").textContent = productos.length;
+    document.getElementById("dato-stock-critico").textContent = criticos.length;
+    document.getElementById("dato-usuarios").textContent = obtenerUsuarios().length;
+
+    document.getElementById("tabla-stock-critico").innerHTML = criticos.map(p => `
+      <tr><td>${p.codigo}</td><td>${p.nombre}</td><td class="numerico">${p.stock}</td><td class="numerico">${p.stockCritico}</td></tr>
+    `).join("") || '<tr><td colspan="4">No hay productos con stock crítico.</td></tr>';
+  });
+</script>
+
+</body>
+</html>

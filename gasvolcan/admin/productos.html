@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productos — Panel administrador Gas El Volcán</title>
+<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+<div class="panel-admin">
+  <button class="boton-menu-admin" id="boton-menu-admin">☰ Menú</button>
+  <aside class="panel-lateral" id="panel-lateral">
+    <div class="marca-admin">
+      <svg class="llama" viewBox="0 0 24 24"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1-1-2-1-2 1 2 3 3 3 6a6 6 0 0 1-12 0c0-5 3-6 4-9 0 2 1 3 2 3 0-2 0-4 0-6z"/></svg>
+      Panel admin
+    </div>
+    <nav>
+      <a href="index.html" class="">🏠 Dashboard</a>
+      <a href="productos.html" class="activo">📦 Productos</a>
+      <a href="usuarios.html" id="enlace-usuarios" class="">👤 Usuarios</a>
+      <a href="../index.html">🛒 Ver tienda</a>
+    </nav>
+    <div class="sesion-usuario">
+      <strong id="nombre-sesion">Usuario</strong>
+      <span id="rol-sesion">Rol</span><br>
+      <button class="salir" id="boton-salir">Cerrar sesión</button>
+    </div>
+  </aside>
+  <main class="panel-contenido">
+
+
+<div class="panel-encabezado">
+  <h1>Productos</h1>
+  <a href="producto-form.html" class="boton boton--llama" id="boton-nuevo-producto">+ Nuevo producto</a>
+</div>
+<div class="tarjeta-panel">
+  <div class="tabla-responsiva">
+    <table class="tabla-simple">
+      <thead>
+        <tr>
+          <th>Código</th><th>Nombre</th><th>Categoría</th>
+          <th class="numerico">Precio</th><th class="numerico">Stock</th><th>Estado</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-productos"></tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<script src="../js/datos-productos.js"></script>
+<script src="../js/datos-usuarios.js"></script>
+<script src="../js/datos-regiones.js"></script>
+<script src="../js/validaciones.js"></script>
+<script src="js/admin-comun.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    if (!SESION_ADMIN) return;
+    const esVendedor = SESION_ADMIN.tipoUsuario === "Vendedor";
+    if (esVendedor) document.getElementById("boton-nuevo-producto").style.display = "none";
+
+    function pintar(){
+      const productos = obtenerProductos();
+      document.getElementById("tabla-productos").innerHTML = productos.map(function(p){
+        const critico = p.stockCritico !== "" && p.stockCritico !== null && p.stock <= Number(p.stockCritico);
+        const estado = p.stock === 0
+          ? '<span class="insignia insignia--alerta">Sin stock</span>'
+          : (critico ? '<span class="insignia insignia--aviso">Stock crítico</span>' : '<span class="insignia insignia--ok">Disponible</span>');
+        const acciones = esVendedor
+          ? `<a href="../detalle-producto.html?codigo=${p.codigo}" class="boton boton--contorno boton--pequeno" target="_blank">Ver</a>`
+          : `<div class="acciones-fila">
+              <a href="producto-form.html?codigo=${p.codigo}" class="boton boton--contorno boton--pequeno">Editar</a>
+              <button type="button" class="boton boton--pequeno" style="background:var(--rojo-alerta);color:#fff;" data-eliminar="${p.codigo}">Eliminar</button>
+             </div>`;
+        return `<tr><td>${p.codigo}</td><td>${p.nombre}</td><td>${p.categoria}</td><td class="numerico">${formatoCLP(p.precio)}</td><td class="numerico">${p.stock}</td><td>${estado}</td><td>${acciones}</td></tr>`;
+      }).join("");
+
+      document.querySelectorAll("[data-eliminar]").forEach(btn => btn.addEventListener("click", function(){
+        if (confirm("¿Eliminar el producto " + this.dataset.eliminar + "?")){
+          eliminarProducto(this.dataset.eliminar);
+          pintar();
+        }
+      }));
+    }
+    pintar();
+  });
+</script>
+
+</body>
+</html>

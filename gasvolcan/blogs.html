@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blogs — Gas El Volcán</title>
+<link rel="stylesheet" href="css/estilos.css">
+
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="barra-nav">
+    <a href="index.html" class="marca">
+      <svg class="llama" viewBox="0 0 24 24"><path d="M12 2c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-1-1-2-1-2 1 2 3 3 3 6a6 6 0 0 1-12 0c0-5 3-6 4-9 0 2 1 3 2 3 0-2 0-4 0-6z"/></svg>
+      Gas El Volcán
+    </a>
+    <button id="boton-menu" class="boton-menu" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav id="nav-principal" class="nav-principal">
+      <a href="index.html">Home</a>
+      <a href="productos.html">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="blogs.html" class="activo">Blogs</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="nav-acciones">
+      <div id="area-sesion" style="display:flex;gap:14px;align-items:center;">
+        <a href="login.html" class="enlace-sesion">Iniciar sesión</a>
+        <a href="registro.html" class="enlace-sesion">Registrarse</a>
+      </div>
+      <a href="carrito.html" class="carrito-mini" aria-label="Ver carrito">
+        <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.44c-.16.28-.25.61-.25.97 0 1.1.9 2 2 2h12v-2h-11.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1h-14.19l-.94-2z"/></svg>
+        <span data-contador-carrito>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<div class="franja-pagina"><div class="contenedor"><h1>Noticias importantes</h1></div></div>
+<section class="seccion seccion--claro">
+  <div class="contenedor">
+    <div class="tarjeta-blog">
+      <div class="imagen">🛢️</div>
+      <div class="cuerpo">
+        <h2>Caso curioso #1: ¿qué cilindro necesito para mi hogar?</h2>
+        <p>Muchos clientes nos preguntan qué tamaño de cilindro les conviene según el tipo de artefactos que tienen en casa. Te contamos las diferencias entre los cilindros de 5, 11, 15 y 45 kg.</p>
+        <a href="blog-detalle-1.html" class="boton boton--contorno boton--pequeno">Ver caso</a>
+      </div>
+    </div>
+    <div class="tarjeta-blog">
+      <div class="imagen">🧯</div>
+      <div class="cuerpo">
+        <h2>Caso curioso #2: seguridad en el uso del gas licuado</h2>
+        <p>Un cilindro bien instalado y revisado puede evitar accidentes. Repasamos las señales de alerta y las buenas prácticas que recomienda nuestro equipo de reparto.</p>
+        <a href="blog-detalle-2.html" class="boton boton--contorno boton--pequeno">Ver caso</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="pie">
+  <div class="contenedor">
+    <div>
+      <h4>Distribuidora de Gas El Volcán</h4>
+      <p>Distribución de gas licuado a domicilio en Chillán y comunas aledañas desde 1998.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul style="list-style:none;padding:0;display:grid;gap:8px;">
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Cuenta</h4>
+      <ul style="list-style:none;padding:0;display:grid;gap:8px;">
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+        <li><a href="carrito.html">Mi carrito</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <p>Av. Collín 450, Chillán<br>+56 42 221 3456<br>contacto@gasvolcan.cl</p>
+    </div>
+  </div>
+  <p class="franja">© 2026 Distribuidora de Gas El Volcán. Proyecto académico DSY1104.</p>
+</footer>
+
+<script src="js/datos-productos.js"></script>
+<script src="js/datos-usuarios.js"></script>
+<script src="js/datos-regiones.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/validaciones.js"></script>
+<script src="js/nav.js"></script>
+
+</body>
+</html>
