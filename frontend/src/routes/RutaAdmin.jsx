@@ -1,18 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
-
-const CLAVE_SESION = 'gasvolcan_sesion'
-
-function obtenerSesion() {
-    try {
-        return JSON.parse(localStorage.getItem(CLAVE_SESION))
-    } catch {
-        return null
-    }
-}
+import { useAuth } from '../hooks/useAuth'
 
 function RutaAdmin() {
-    const sesion = obtenerSesion()
-    const esAdmin = sesion?.rol === 'admin'
+    const { esAdmin } = useAuth()
 
     if (!esAdmin) {
         return <Navigate to="/login" replace />

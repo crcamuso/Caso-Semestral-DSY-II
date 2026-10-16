@@ -2,20 +2,23 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../common/Logo'
 import SearchBar from '../common/SearchBar'
 import CartButton from '../common/CartButton'
-
-// Provisorio: en la tarjeta 7 estas categorías vendrán del contexto.
-const CATEGORIAS_PROVISORIAS = [
-    { id: 1, nombre: 'Cilindros de gas' },
-    { id: 2, nombre: 'Reguladores' },
-    { id: 3, nombre: 'Mangueras' },
-    { id: 4, nombre: 'Accesorios de seguridad' },
-]
+import { useProducts } from '../../hooks/useProducts'
+import { useCart } from '../../hooks/useCart'
+import { useAuth } from '../../hooks/useAuth'
 
 function Navbar() {
     const navigate = useNavigate()
+    const { categorias } = useProducts()
+    const { total, cantidadTotal } = useCart()
+    const { usuario, esAdmin, cerrarSesion } = useAuth()
 
     const buscar = (texto) => {
         navigate(texto ? `/productos?q=${encodeURIComponent(texto)}` : '/productos')
+    }
+
+    const salir = () => {
+        cerrarSesion()
+        navigate('/')
     }
 
     const claseEnlace = ({ isActive }) => `nav-link${isActive ? ' active fw-bold' : ''}`
@@ -64,7 +67,7 @@ function Navbar() {
                                     <Link className="dropdown-item" to="/categorias">Todas las categorías</Link>
                                 </li>
                                 <li><hr className="dropdown-divider" /></li>
-                                {CATEGORIAS_PROVISORIAS.map((categoria) => (
+                                {categorias.map((categoria) => (
                                     <li key={categoria.id}>
                                         <Link className="dropdown-item" to={`/categorias/${categoria.id}`}>
                                             {categoria.nombre}
@@ -90,10 +93,25 @@ function Navbar() {
 
                     <div className="d-flex flex-column flex-lg-row gap-2 align-items-lg-center">
                         <SearchBar onBuscar={buscar} />
-                        <Link className="btn btn-outline-light" to="/login">Iniciar Sesión</Link>
-                        <Link className="btn btn-light" to="/registro">Crear Cuenta</Link>
-                        {/* Provisorio: total y cantidad vendrán de CartContext en la tarjeta 7 */}
-                        <CartButton total={0} cantidad={0} />
+
+                        {usuario ? (
+                            <>
+                                <span className="text-white small text-nowrap">Hola, {usuario.nombre}</span>
+                                {esAdmin && (
+                                    <Link className="btn btn-outline-light text-nowrap" to="/admin">Panel</Link>
+                                )}
+                                <button type="button" className="btn btn-outline-light text-nowrap" onClick={salir}>
+                                    Cerrar sesión
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link className="btn btn-outline-light text-nowrap" to="/login">Iniciar Sesión</Link>
+                                <Link className="btn btn-light text-nowrap" to="/registro">Crear Cuenta</Link>
+                            </>
+                        )}
+
+                        <CartButton total={total} cantidad={cantidadTotal} />
                     </div>
                 </div>
             </div>
