@@ -1,23 +1,78 @@
 import ProductCard from '../../components/common/ProductCard'
 import CategoryCard from '../../components/common/CategoryCard'
-import SearchBar from '../../components/common/SearchBar'
-import CartButton from '../../components/common/CartButton'
-import { PRODUCTOS_INICIALES, CATEGORIAS_INICIALES } from '../../data/db'
+import { useProducts } from '../../hooks/useProducts'
+import { useCart } from '../../hooks/useCart'
+import { useAuth } from '../../hooks/useAuth'
 
 function EjemplosComponentes() {
-    const anadir = (id) => alert(`Añadir producto id=${id}`)
-    const buscar = (texto) => alert(`Buscar: "${texto}"`)
+    const { productos, categorias, crearProducto, eliminarProducto } = useProducts()
+    const { agregar, cantidadTotal, total } = useCart()
+    const { usuario, iniciarSesion, cerrarSesion } = useAuth()
 
     const nombreCategoria = (categoriaId) =>
-        CATEGORIAS_INICIALES.find((c) => c.id === categoriaId)?.nombre ?? ''
+        categorias.find((c) => c.id === categoriaId)?.nombre ?? ''
+
+    const anadir = (id) => {
+        const resultado = agregar(id, 1)
+        alert(resultado.mensaje)
+    }
+
+    const crearDePrueba = () => {
+        const resultado = crearProducto({
+            codigo: `T${Date.now() % 100000}`,
+            categoriaId: 4,
+            nombre: 'Producto de prueba',
+            precio: 1000,
+            stock: 10,
+            stockCritico: 2,
+            oferta: false,
+        })
+        if (!resultado.ok) alert(JSON.stringify(resultado.errores))
+    }
+
+    const borrarDePrueba = () => {
+        const ultimo = [...productos].reverse().find((p) => p.codigo.startsWith('T'))
+        if (ultimo) eliminarProducto(ultimo.id)
+    }
 
     return (
         <div className="container py-4">
-            <h1 className="mb-4">Ejemplos de componentes</h1>
+            <h1 className="mb-4">Prueba de contextos</h1>
 
-            <h2 className="h5">ProductCard con datos de db.js ({PRODUCTOS_INICIALES.length} productos)</h2>
+            <div className="card mb-4">
+                <div className="card-body">
+                    <p className="mb-2">
+                        <strong>Sesión:</strong>{' '}
+                        {usuario ? `${usuario.nombre} (${usuario.rol})` : 'sin sesión'}
+                    </p>
+                    <p className="mb-3">
+                        <strong>Carrito:</strong> {cantidadTotal} unidades, total {total.toLocaleString('es-CL')}
+                    </p>
+                    <div className="d-flex flex-wrap gap-2">
+                        <button className="btn btn-outline-dark btn-sm"
+                                onClick={() => alert(iniciarSesion('admin@duoc.cl', 'admin123').ok ? 'Sesión admin abierta' : 'Error')}>
+                            Entrar como admin
+                        </button>
+                        <button className="btn btn-outline-dark btn-sm"
+                                onClick={() => alert(iniciarSesion('camila@gmail.com', 'cliente123').ok ? 'Sesión cliente abierta' : 'Error')}>
+                            Entrar como cliente
+                        </button>
+                        <button className="btn btn-outline-dark btn-sm" onClick={cerrarSesion}>
+                            Cerrar sesión
+                        </button>
+                        <button className="btn btn-outline-success btn-sm" onClick={crearDePrueba}>
+                            Crear producto de prueba
+                        </button>
+                        <button className="btn btn-outline-danger btn-sm" onClick={borrarDePrueba}>
+                            Eliminar producto de prueba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 className="h5">Productos ({productos.length})</h2>
             <div className="row g-3 mb-4">
-                {PRODUCTOS_INICIALES.map((p) => (
+                {productos.map((p) => (
                     <div className="col-6 col-md-4 col-lg-3" key={p.id}>
                         <ProductCard
                             id={p.id}
@@ -33,24 +88,13 @@ function EjemplosComponentes() {
                 ))}
             </div>
 
-            <h2 className="h5">CategoryCard con datos de db.js</h2>
-            <div className="row g-3 mb-4">
-                {CATEGORIAS_INICIALES.map((c) => (
+            <h2 className="h5">Categorías ({categorias.length})</h2>
+            <div className="row g-3">
+                {categorias.map((c) => (
                     <div className="col-6 col-md-3" key={c.id}>
                         <CategoryCard id={c.id} nombre={c.nombre} descripcion={c.descripcion} icono={c.icono} />
                     </div>
                 ))}
-            </div>
-
-            <h2 className="h5">SearchBar</h2>
-            <div className="bg-danger p-3 rounded mb-4">
-                <SearchBar onBuscar={buscar} />
-            </div>
-
-            <h2 className="h5">CartButton</h2>
-            <div className="d-flex gap-3">
-                <CartButton />
-                <CartButton total={32980} cantidad={2} />
             </div>
         </div>
     )
