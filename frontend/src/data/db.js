@@ -28,20 +28,20 @@ export const PRODUCTOS_INICIALES = [
 
 export const USUARIOS_INICIALES = [
     {
-        id: 1, run: '191110229', nombre: 'Marcela', apellidos: 'Soto Pinto',
+        id: 1, run: '191110226', nombre: 'Marcela', apellidos: 'Soto Pinto',
         correo: 'admin@duoc.cl', clave: 'admin123', fechaNacimiento: '1980-04-12',
         rol: 'admin', region: 'Región de Ñuble', comuna: 'Chillán',
         direccion: 'Av. Collín 450, Chillán',
     },
     {
-        id: 2, run: '18345678K', nombre: 'Pedro', apellidos: 'Ríos Vega',
+        id: 2, run: '183456784', nombre: 'Pedro', apellidos: 'Ríos Vega',
         correo: 'vendedor@duoc.cl', clave: 'vend1234', fechaNacimiento: '1990-07-01',
         rol: 'cliente', region: 'Región de Ñuble', comuna: 'Chillán Viejo',
         direccion: 'Los Aromos 220, Chillán Viejo',
     },
     {
         id: 3, run: '201234565', nombre: 'Camila', apellidos: 'González Rojas',
-        correo: 'camila@correo.cl', clave: 'cliente123', fechaNacimiento: '1995-11-23',
+        correo: 'camila@gmail.com', clave: 'cliente123', fechaNacimiento: '1995-11-23',
         rol: 'cliente', region: 'Región de Ñuble', comuna: 'Chillán',
         direccion: 'Calle Arauco 1020, Chillán',
     },
@@ -60,7 +60,7 @@ export const ORDENES_INICIALES = [
     },
     {
         id: 2, numero: 'ORD-0002', usuarioId: 3, fecha: '2026-10-12', estado: 'Pendiente',
-        cliente: { nombre: 'Camila', apellidos: 'González Rojas', correo: 'camila@correo.cl' },
+        cliente: { nombre: 'Camila', apellidos: 'González Rojas', correo: 'camila@gmail.com' },
         direccion: { calle: 'Calle Arauco 1020', departamento: '', region: 'Región de Ñuble', comuna: 'Chillán', indicaciones: 'Portón verde' },
         items: [
             { productoId: 1, nombre: 'Cilindro GLP 5 kg', precio: 6500, cantidad: 1 },
@@ -70,7 +70,7 @@ export const ORDENES_INICIALES = [
     },
     {
         id: 3, numero: 'ORD-0003', usuarioId: 3, fecha: '2026-10-14', estado: 'Entregada',
-        cliente: { nombre: 'Camila', apellidos: 'González Rojas', correo: 'camila@correo.cl' },
+        cliente: { nombre: 'Camila', apellidos: 'González Rojas', correo: 'camila@gmail.com' },
         direccion: { calle: 'Calle Arauco 1020', departamento: '', region: 'Región de Ñuble', comuna: 'Chillán', indicaciones: '' },
         items: [
             { productoId: 3, nombre: 'Cilindro GLP 15 kg', precio: 16000, cantidad: 1 },
