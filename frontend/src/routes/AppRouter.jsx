@@ -20,7 +20,7 @@ import Carrito from '../pages/tienda/Carrito'
 import Checkout from '../pages/tienda/Checkout'
 import PagoCorrecto from '../pages/tienda/PagoCorrecto'
 import PagoError from '../pages/tienda/PagoError'
-
+import EjemplosComponentes from '../pages/tienda/EjemplosComponentes'
 import Dashboard from '../pages/admin/Dashboard'
 import Ordenes from '../pages/admin/Ordenes'
 import Boleta from '../pages/admin/Boleta'
@@ -48,6 +48,7 @@ function AppRouter() {
             <Route element={<TiendaLayout />}>
                 <Route index element={<Home />} />
                 <Route path="productos" element={<Productos />} />
+                <Route path="ejemplos" element={<EjemplosComponentes />} />
                 <Route path="productos/:id" element={<DetalleProducto />} />
                 <Route path="categorias" element={<Categorias />} />
                 <Route path="categorias/:id" element={<Categoria />} />
