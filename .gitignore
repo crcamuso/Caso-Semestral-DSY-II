@@ -1,0 +1,19 @@
+# Dependencias y build
+node_modules
+dist
+dist-ssr
+
+# IDE
+.idea
+*.iml
+.vscode/*
+!.vscode/extensions.json
+
+# Variables de entorno y logs
+.env
+.env.local
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
