@@ -1,59 +1,45 @@
-import ProductCard from '../../components/common/ProductCard.jsx'
-import CategoryCard from '../../components/common/CategoryCard.jsx'
-import SearchBar from '../../components/common/SearchBar.jsx'
-import CartButton from '../../components/common/CartButton.jsx'
+import ProductCard from '../../components/common/ProductCard'
+import CategoryCard from '../../components/common/CategoryCard'
+import SearchBar from '../../components/common/SearchBar'
+import CartButton from '../../components/common/CartButton'
+import { PRODUCTOS_INICIALES, CATEGORIAS_INICIALES } from '../../data/db'
 
 function EjemplosComponentes() {
     const anadir = (id) => alert(`Añadir producto id=${id}`)
     const buscar = (texto) => alert(`Buscar: "${texto}"`)
 
+    const nombreCategoria = (categoriaId) =>
+        CATEGORIAS_INICIALES.find((c) => c.id === categoriaId)?.nombre ?? ''
+
     return (
         <div className="container py-4">
             <h1 className="mb-4">Ejemplos de componentes</h1>
 
-            <h2 className="h5">ProductCard</h2>
+            <h2 className="h5">ProductCard con datos de db.js ({PRODUCTOS_INICIALES.length} productos)</h2>
             <div className="row g-3 mb-4">
-                <div className="col-6 col-md-4 col-lg-3">
-                    <ProductCard
-                        id={1}
-                        nombre="Cilindro de gas 15 kg"
-                        categoria="Cilindros de gas"
-                        precio={24990}
-                        stock={12}
-                        onAnadir={anadir}
-                    />
-                </div>
-                <div className="col-6 col-md-4 col-lg-3">
-                    <ProductCard
-                        id={2}
-                        nombre="Regulador de gas"
-                        categoria="Reguladores"
-                        precio={9990}
-                        precioOferta={7990}
-                        stock={5}
-                        onAnadir={anadir}
-                    />
-                </div>
-                <div className="col-6 col-md-4 col-lg-3">
-                    <ProductCard
-                        id={3}
-                        nombre="Manguera de gas 2 m"
-                        categoria="Mangueras"
-                        precio={4990}
-                        stock={0}
-                        onAnadir={anadir}
-                    />
-                </div>
+                {PRODUCTOS_INICIALES.map((p) => (
+                    <div className="col-6 col-md-4 col-lg-3" key={p.id}>
+                        <ProductCard
+                            id={p.id}
+                            nombre={p.nombre}
+                            categoria={nombreCategoria(p.categoriaId)}
+                            precio={p.precio}
+                            precioOferta={p.precioOferta}
+                            stock={p.stock}
+                            imagen={p.imagen}
+                            onAnadir={anadir}
+                        />
+                    </div>
+                ))}
             </div>
 
-            <h2 className="h5">CategoryCard</h2>
+            <h2 className="h5">CategoryCard con datos de db.js</h2>
             <div className="row g-3 mb-4">
-                <div className="col-6 col-md-3">
-                    <CategoryCard id={1} nombre="Cilindros de gas" descripcion="5, 11, 15 y 45 kg" />
-                </div>
-                <div className="col-6 col-md-3">
-                    <CategoryCard id={2} nombre="Reguladores" icono="🔧" seleccionada />
-                </div>
+                {CATEGORIAS_INICIALES.map((c) => (
+                    <div className="col-6 col-md-3" key={c.id}>
+                        <CategoryCard id={c.id} nombre={c.nombre} descripcion={c.descripcion} icono={c.icono} />
+                    </div>
+                ))}
             </div>
 
             <h2 className="h5">SearchBar</h2>
