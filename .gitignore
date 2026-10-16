@@ -1,19 +1,16 @@
-# Dependencias y build
-node_modules
-dist
-dist-ssr
-
-# IDE
+﻿# IDE
 .idea
 *.iml
 .vscode/*
 !.vscode/extensions.json
 
-# Variables de entorno y logs
+# Dependencias y build
+node_modules
+dist
+
+# Entorno, logs y sistema
 .env
 .env.local
 *.log
-
-# Sistema
 .DS_Store
 Thumbs.db
