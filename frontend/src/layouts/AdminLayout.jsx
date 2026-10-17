@@ -1,18 +1,25 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import AdminSidebar from '../components/admin/AdminSidebar'
+import { useAuth } from '../hooks/useAuth'
 
 function AdminLayout() {
+    const navigate = useNavigate()
+    const { usuario, cerrarSesion } = useAuth()
+
+    const salir = () => {
+        cerrarSesion()
+        navigate('/')
+    }
+
     return (
-        <>
-            <nav className="navbar navbar-dark bg-dark">
-                <div className="container-fluid">
-                    <span className="navbar-brand fw-bold">GasVolcan · Admin</span>
-                    <Link className="btn btn-outline-light btn-sm" to="/">Ir a la tienda</Link>
-                </div>
-            </nav>
-            <main>
-                <Outlet />
-            </main>
-        </>
+        <div className="container-fluid">
+            <div className="row g-0 min-vh-100">
+                <AdminSidebar usuario={usuario} onCerrarSesion={salir} />
+                <main className="col-md-9 col-lg-10 bg-light p-3 p-md-4">
+                    <Outlet />
+                </main>
+            </div>
+        </div>
     )
 }
 
