@@ -21,3 +21,49 @@ export function renderizar(elemento) {
         },
     }
 }
+
+// Busca un botón por su texto exacto.
+export function buscarBoton(contenedor, texto) {
+    return (
+        Array.from(contenedor.querySelectorAll('button')).find(
+            (boton) => boton.textContent.trim() === texto,
+        ) ?? null
+    )
+}
+
+export function hacerClic(elemento) {
+    act(() => {
+        elemento.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+    })
+}
+
+// React ignora value = '...' directo: hay que usar el setter nativo y disparar 'input'.
+export function escribir(campo, valor) {
+    const prototipo =
+        campo instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype
+    const asignar = Object.getOwnPropertyDescriptor(prototipo, 'value').set
+    act(() => {
+        asignar.call(campo, valor)
+        campo.dispatchEvent(new Event('input', { bubbles: true }))
+    })
+}
+
+export function seleccionar(select, valor) {
+    const asignar = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set
+    act(() => {
+        asignar.call(select, valor)
+        select.dispatchEvent(new Event('change', { bubbles: true }))
+    })
+}
+
+export function salirDelCampo(campo) {
+    act(() => {
+        campo.dispatchEvent(new FocusEvent('focusout', { bubbles: true }))
+    })
+}
+
+export function enviarFormulario(formulario) {
+    act(() => {
+        formulario.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    })
+}

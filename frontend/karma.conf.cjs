@@ -21,13 +21,9 @@ module.exports = function (config) {
         basePath: '',
         frameworks: ['jasmine', 'webpack'],
 
-        files: [
-            { pattern: 'src/tests/**/*.spec.jsx', watched: false },
-            { pattern: 'src/tests/**/*.spec.js', watched: false },
-        ],
+        files: [{ pattern: 'src/tests/**/*.spec.jsx', watched: false }],
         preprocessors: {
             'src/tests/**/*.spec.jsx': ['webpack'],
-            'src/tests/**/*.spec.js': ['webpack'],
         },
 
         webpack: {
@@ -35,6 +31,12 @@ module.exports = function (config) {
             resolve: { extensions: ['.js', '.jsx'] },
             module: {
                 rules: [
+                    {
+                        // El proyecto declara "type": "module": sin esta regla webpack exige
+                        // escribir la extensión en cada import de un archivo .js.
+                        test: /\.m?js$/,
+                        resolve: { fullySpecified: false },
+                    },
                     {
                         test: /\.(js|jsx)$/,
                         exclude: /node_modules/,
