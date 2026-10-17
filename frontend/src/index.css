@@ -109,3 +109,17 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Impresión de la boleta: solo se imprime el detalle de la orden. */
+@media print {
+  nav,
+  footer,
+  .no-imprimir {
+    display: none !important;
+  }
+
+  .boleta {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
