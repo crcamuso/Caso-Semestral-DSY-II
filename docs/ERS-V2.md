@@ -1,7 +1,7 @@
 # Especificación de Requerimientos de Software (ERS) — Versión 2
 
 **Proyecto:** Tienda online Distribuidora de Gas El Volcán · **Curso:** DSY1104 – Desarrollo FullStack II · **Evaluación 2**
-**Repositorio:** https://github.com/crcamuso/Caso-Semestral-DSY-II · **Integrantes:** Cristopher y Leo
+**Repositorio:** https://github.com/crcamuso/Caso-Semestral-DSY-II · **Integrantes:** Cristopher Camus y Leonardo Mansilla
 
 ## 1. Introducción y alcance
 
