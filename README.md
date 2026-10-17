@@ -96,5 +96,5 @@ Cada tarjeta del tablero de Trello se trabaja en su propia rama (`feature/tarjet
 
 ## Integrantes
 
-- Cristopher [apellido] — panel de administrador, pruebas y GitHub
-- Leo [apellido] — tienda, formularios y documentación
+- Cristopher Camus — panel de administrador, pruebas y GitHub
+- Leonardo Mansilla — tienda, formularios y documentación
