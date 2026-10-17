@@ -30,7 +30,7 @@ function PagoError() {
                 </p>
             </div>
 
-            <ResumenOrden orden={orden} />
+            <ResumenOrden orden={orden} etiquetaTotal="Total a pagar" />
 
             <div className="d-flex flex-wrap gap-2 mt-3">
                 <button type="button" className="btn btn-danger" onClick={reintentar}>

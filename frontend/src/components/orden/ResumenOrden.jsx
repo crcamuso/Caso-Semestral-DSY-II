@@ -7,7 +7,7 @@ function formatoFecha(iso) {
 }
 
 // Detalle de solo lectura de una orden: se reutiliza en pago correcto, pago con error y boleta del admin.
-function ResumenOrden({ orden }) {
+function ResumenOrden({ orden, etiquetaTotal = 'Total pagado' }) {
     const { cliente, direccion } = orden
 
     return (
@@ -66,7 +66,7 @@ function ResumenOrden({ orden }) {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colSpan="3" className="text-end">Total pagado</th>
+                                <th colSpan="3" className="text-end">{etiquetaTotal}</th>
                                 <th className="text-end fs-5">{formatoCLP(orden.total)}</th>
                             </tr>
                         </tfoot>
@@ -78,6 +78,7 @@ function ResumenOrden({ orden }) {
 }
 
 ResumenOrden.propTypes = {
+    etiquetaTotal: PropTypes.string,
     orden: PropTypes.shape({
         numero: PropTypes.string.isRequired,
         fecha: PropTypes.string.isRequired,
