@@ -81,30 +81,35 @@ export const ORDENES_INICIALES = [
     },
 ]
 
-// Textos de ejemplo: reemplazar por los de blogs.html y blog-detalle-1/2.html de la V1.
+// Textos tomados de blog-detalle-1.html y blog-detalle-2.html de la V1.
 export const BLOGS_INICIALES = [
     {
         id: 1,
-        titulo: 'Cómo detectar una fuga de gas en casa',
+        titulo: '¿Qué cilindro necesito para mi hogar?',
         fecha: '2026-09-15',
         imagen: '',
-        resumen: 'Señales de alerta y qué hacer si sospechas una fuga.',
+        icono: '🛢️',
+        resumen: 'Guía rápida para elegir entre cilindros de 5, 11, 15 y 45 kg según tu consumo.',
         contenido: [
-            'El gas licuado tiene un olor característico que se agrega a propósito para que sea fácil notar una fuga. Si lo sientes, no enciendas luces ni artefactos.',
-            'Cierra la válvula del cilindro, ventila el lugar abriendo puertas y ventanas, y llama a tu distribuidor o a los servicios de emergencia.',
-            'Revisa periódicamente mangueras y conexiones, y reemplázalas si notas grietas o desgaste.',
+            'La elección del cilindro correcto depende del consumo diario de tu hogar y del tipo de artefactos que utilices. El cilindro de 5 kg es ideal para cocinas pequeñas, camping o como respaldo de emergencia, ya que es liviano y fácil de transportar.',
+            'El cilindro de 11 kg es el más utilizado en los hogares chilenos: alcanza para cocina y calefacción moderada durante varias semanas, y es compatible con la mayoría de los reguladores estándar del mercado.',
+            'Si tu hogar tiene un consumo más alto, ya sea por calefacción central o por una familia numerosa, el cilindro de 15 kg te dará mayor autonomía sin aumentar demasiado el tamaño del equipo.',
+            'Finalmente, el cilindro de 45 kg está pensado para uso comercial: restaurantes, talleres o locales que necesitan un suministro constante y de mayor volumen.',
+            'Si tienes dudas sobre qué cilindro se adapta mejor a tu consumo, puedes escribirnos desde nuestra página de contacto y te ayudaremos a elegir.',
         ],
     },
     {
         id: 2,
-        titulo: 'Qué tamaño de cilindro conviene para tu hogar',
+        titulo: 'Seguridad en el uso del gas licuado',
         fecha: '2026-09-28',
         imagen: '',
-        resumen: 'Guía rápida para elegir entre cilindros de 5, 11, 15 y 45 kg.',
+        icono: '🧯',
+        resumen: 'Revisiones básicas y qué hacer si sospechas una fuga de gas.',
         contenido: [
-            'El cilindro de 5 kg sirve para cocinas pequeñas y calefacción puntual. El de 11 kg es el más usado en hogares chilenos.',
-            'El de 15 kg es útil para familias con alto consumo, y el de 45 kg se recomienda para uso comercial o industrial.',
-            'Antes de pedir uno nuevo, confirma que tu regulador sea compatible con el tamaño que elegiste.',
+            'Un cilindro de gas bien instalado es completamente seguro, pero conviene revisar algunos puntos con regularidad. Antes de conectar un cilindro nuevo, revisa que la manguera no tenga grietas ni esté reseca, y que la abrazadera esté firme en ambos extremos.',
+            'Si notas olor a gas cerca del regulador o la manguera, cierra la llave de paso de inmediato, ventila el espacio y no enciendas ni apagues interruptores eléctricos hasta confirmar que el olor desapareció.',
+            'Recomendamos instalar el cilindro en un lugar ventilado, alejado de fuentes de calor directo y nunca dentro de dormitorios. Un detector de gas a batería es una excelente inversión para hogares con niños o adultos mayores, ya que avisa con una alarma sonora ante cualquier fuga.',
+            'Nuestros repartidores están capacitados para revisar la conexión al momento de la entrega. Si tienes dudas sobre la instalación de tu cilindro, puedes pedir ayuda directamente al repartidor o escribirnos por contacto.',
         ],
     },
 ]
