@@ -17,6 +17,9 @@ if (navegadorEncontrado) {
 }
 
 module.exports = function (config) {
+    // `npm run test:coverage` agrega --cobertura: instrumenta el código y genera el informe.
+    const conCobertura = Boolean(config.cobertura)
+
     config.set({
         basePath: '',
         frameworks: ['jasmine', 'webpack'],
@@ -47,6 +50,10 @@ module.exports = function (config) {
                                     ['@babel/preset-env', { targets: { chrome: '100' } }],
                                     ['@babel/preset-react', { runtime: 'automatic' }],
                                 ],
+                                // Solo mide el código de la aplicación, no las pruebas.
+                                plugins: conCobertura
+                                    ? [['istanbul', { exclude: ['src/tests/**', '**/node_modules/**'] }]]
+                                    : [],
                             },
                         },
                     },
@@ -55,7 +62,17 @@ module.exports = function (config) {
         },
 
         browsers: ['ChromeHeadless'],
-        reporters: ['progress'],
+        reporters: conCobertura ? ['spec', 'coverage'] : ['spec'],
+
+        coverageReporter: {
+            dir: 'coverage',
+            reporters: [
+                { type: 'text-summary' },
+                { type: 'text' },
+                { type: 'html', subdir: 'html' },
+            ],
+        },
+
         singleRun: true,
         restartOnFileChange: false,
     })
