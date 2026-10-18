@@ -27,8 +27,8 @@ function ProductCard({
                 <img
                     src={imagen}
                     alt={nombre}
-                    className="card-img-top"
-                    style={{ height: '180px', objectFit: 'cover' }}
+                    className="card-img-top bg-white p-2"
+                    style={{ height: '180px', objectFit: 'contain' }}
                 />
             ) : (
                 <div
