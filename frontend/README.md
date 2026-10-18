@@ -1,16 +1,27 @@
-# React + Vite
+# Gas El Volcán — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tienda online en React (Vite) con panel de administrador. Proyecto académico DSY1104, Evaluación 2.
 
-Currently, two official plugins are available:
+## Instalación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo. |
+| `npm run build` | Versión de producción. |
+| `npm run lint` | Revisa el código. |
+| `npm test` | Pruebas Jasmine con Karma (requiere Chrome o Edge). |
+| `npm run test:coverage` | Pruebas con cobertura. |
 
-## Expanding the ESLint configuration
+## Usuarios de prueba
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Administrador: `admin@duoc.cl` / `admin123`
+- Cliente: `camila@gmail.com` / `cliente123`
+
+Descripción completa del proyecto en el README de la raíz del repositorio.
