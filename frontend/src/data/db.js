@@ -66,27 +66,6 @@ export const USUARIOS_INICIALES = [
         direccion: 'Calle Arauco 1020, Chillán',
     },
 ]
-// Fotos de los productos (archivos en frontend/public/img/productos).
-// Para cambiar la foto de un producto, edita su línea; un código sin foto muestra un ícono.
-const IMAGENES_PRODUCTO = {
-    CL001: '/img/productos/cl001.webp',
-    CL002: '/img/productos/cl002.webp',
-    CL003: '/img/productos/cl003.webp',
-    CL004: '/img/productos/cl004.webp',
-    RG001: '/img/productos/rg001.webp',
-    RG002: '/img/productos/rg002.webp',
-    RG003: '/img/productos/rg003.webp',
-    MG003: '/img/productos/mg003.webp',
-    MG004: '/img/productos/mg004.webp',
-    AC001: '/img/productos/ac001.webp',
-    AC003: '/img/productos/ac003.webp',
-}
-
-export const PRODUCTOS_INICIALES = PRODUCTOS_BASE.map((producto) => ({
-    ...producto,
-    imagen: IMAGENES_PRODUCTO[producto.codigo] ?? producto.imagen,
-}))
-
 export const ORDENES_INICIALES = [
     {
         id: 1, numero: 'ORD-0001', usuarioId: 2, fecha: '2026-10-05', estado: 'Entregada',
