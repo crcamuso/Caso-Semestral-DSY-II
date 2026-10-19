@@ -5,6 +5,7 @@ const SLIDES = [
         titulo: 'Gas a domicilio en Chillán',
         subtitulo: 'Pide tu cilindro en línea y recíbelo en la puerta de tu casa.',
         fondo: 'bg-danger',
+        imagen: '/img/CamionGas.jpg',
         enlace: '/productos',
         textoEnlace: 'Ver productos',
     },
@@ -50,7 +51,16 @@ function CarruselHome() {
                     >
                         <div
                             className={`${slide.fondo} text-white d-flex align-items-center justify-content-center text-center mx-auto`}
-                            style={{ height: '300px', maxWidth: '1200px', width: '100%' }}
+                            style={{
+                                height: '300px',
+                                maxWidth: '1200px',
+                                width: '100%',
+                                ...(slide.imagen && {
+                                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url(${slide.imagen})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                }),
+                            }}
                         >
                             <div className="px-5">
                                 <h2 className="display-6 fw-bold">{slide.titulo}</h2>
