@@ -41,7 +41,12 @@ function DetalleProducto() {
             <div className="row g-4">
                 <div className="col-md-5">
                     {producto.imagen ? (
-                        <img src={producto.imagen} alt={producto.nombre} className="img-fluid rounded shadow-sm" />
+                        <img
+                            src={producto.imagen}
+                            alt={producto.nombre}
+                            className="img-fluid rounded shadow-sm bg-white"
+                            style={{ maxHeight: '420px', width: '100%', objectFit: 'contain' }}
+                        />
                     ) : (
                         <div
                             className="bg-light rounded d-flex align-items-center justify-content-center display-1"

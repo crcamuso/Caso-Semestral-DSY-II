@@ -9,7 +9,7 @@ export const CATEGORIAS_INICIALES = [
     { id: 4, nombre: 'Accesorios', descripcion: 'Carros, tapas y detectores de gas', icono: '🧰' },
 ]
 
-export const PRODUCTOS_INICIALES = [
+const PRODUCTOS_BASE = [
     { id: 1, codigo: 'CL001', categoriaId: 1, nombre: 'Cilindro GLP 5 kg', descripcion: 'Cilindro de gas licuado de petróleo de 5 kg. Ideal para uso residencial (cocina, calefacción pequeña).', precio: 6500, precioOferta: null, oferta: false, stock: 80, stockCritico: 15, imagen: '' },
     { id: 2, codigo: 'CL002', categoriaId: 1, nombre: 'Cilindro GLP 11 kg', descripcion: 'Cilindro estándar doméstico. El más utilizado en los hogares chilenos. Compatible con reguladores estándar.', precio: 12000, precioOferta: null, oferta: false, stock: 200, stockCritico: 30, imagen: '' },
     { id: 3, codigo: 'CL003', categoriaId: 1, nombre: 'Cilindro GLP 15 kg', descripcion: 'Cilindro de mayor capacidad para hogares de alto consumo o locales pequeños.', precio: 16000, precioOferta: null, oferta: false, stock: 90, stockCritico: 20, imagen: '' },
@@ -25,6 +25,26 @@ export const PRODUCTOS_INICIALES = [
     { id: 13, codigo: 'AC002', categoriaId: 4, nombre: 'Tapa protectora para válvula', descripcion: 'Tapa de plástico ABS para proteger la válvula del cilindro durante el transporte.', precio: 1490, precioOferta: null, oferta: false, stock: 60, stockCritico: 12, imagen: '' },
     { id: 14, codigo: 'AC003', categoriaId: 4, nombre: 'Detector de gas a batería', descripcion: 'Sensor electroquímico con alarma sonora y visual ante fuga de gas GLP o metano.', precio: 19990, precioOferta: null, oferta: false, stock: 8, stockCritico: 10, imagen: '' },
 ]
+// Fotos de los productos (archivos en frontend/public/img/productos).
+// Para cambiar la foto de un producto, edita su línea; un código sin foto muestra un ícono.
+const IMAGENES_PRODUCTO = {
+    CL001: '/img/productos/cl001.webp',
+    CL002: '/img/productos/cl002.webp',
+    CL003: '/img/productos/cl003.webp',
+    CL004: '/img/productos/cl004.webp',
+    RG001: '/img/productos/rg001.webp',
+    RG002: '/img/productos/rg002.webp',
+    RG003: '/img/productos/rg003.webp',
+    MG003: '/img/productos/mg003.webp',
+    MG004: '/img/productos/mg004.webp',
+    AC001: '/img/productos/ac001.webp',
+    AC003: '/img/productos/ac003.webp',
+}
+
+export const PRODUCTOS_INICIALES = PRODUCTOS_BASE.map((producto) => ({
+    ...producto,
+    imagen: IMAGENES_PRODUCTO[producto.codigo] ?? producto.imagen,
+}))
 
 export const USUARIOS_INICIALES = [
     {
